@@ -81,15 +81,15 @@ void LiftToggle(std::string state){
     if (state == "up"){
       Lift.spin(directionType::fwd, 100, velocityUnits::pct);
       Lift.setBrake(brakeType::brake);
-    }
-    else if (state == "down"){
+    }else if (state == "down"){
       Lift.spin(directionType::rev, 100, velocityUnits::pct);
       Lift.setBrake(brakeType::coast);
-  }
+    }
 
-  if (Lift.torque(torqueUnits::Nm) > 1.5){
-    Lift.stop();
-    break;
+    if (Lift.torque(torqueUnits::Nm) > 1.5){
+      Lift.stop();
+      break;
+    }
   }
 }
 

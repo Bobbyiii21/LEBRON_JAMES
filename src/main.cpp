@@ -181,10 +181,17 @@ void autonomous(void) {
 
 void usercontrol(void) {
   // User control code here, inside the loop
+
+  Controller1.ButtonX.pressed(x_CallBack);
+  Controller1.ButtonY.pressed(y_CallBack);
+  Controller1.ButtonA.pressed(a_CallBack);
+  Controller1.ButtonB.pressed(b_CallBack);
+
   while (1) {
     
     chassis.control_arcade();
     
+
     if (Controller1.ButtonR1.pressing())
       Puncher.spin(directionType::fwd, 100, velocityUnits::pct);
     else if (Controller1.ButtonR2.pressing())
@@ -206,16 +213,19 @@ void usercontrol(void) {
     else
       Lift.stop(brakeType::brake);
     
-    if (Controller1.ButtonB.pressing())
+    /* if (Controller1.ButtonB.pressing())
       Foot.set(true);
     else if (Controller1.ButtonY.pressing())
       Foot.set(false);
     
-    if (Controller1.ButtonX.pressing())
-      Wing.set(true);
-    else if (Controller1.ButtonA.pressing())
-      Wing.set(false);
-      
+    if (Controller1.ButtonX.pressing()){
+      WingL.set(true);
+      WingR.set(true);
+    }
+    else if (Controller1.ButtonA.pressing()){
+      WingL.set(false);
+      WingR.set(false);
+    } */
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.
   }
