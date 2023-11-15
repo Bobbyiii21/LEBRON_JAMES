@@ -1,4 +1,5 @@
 #include "vex.h"
+#include <string>
 
 using namespace vex;
 using signature = vision::signature;
@@ -44,15 +45,56 @@ void ArcadeControl(int forward, int turn, int deadzone){
 
 triport ThreeWirePort(PORT7);
 
-digital_out Wing(ThreeWirePort.A);
+digital_out WingL(ThreeWirePort.A);
+digital_out WingR(ThreeWirePort.C);
 digital_out Foot(ThreeWirePort.B);
 
+//Pneumatic Variable Setup
+bool WingLState = false;
+bool WingRState = false;
+bool FootState = false;
+//X both
+void x_CallBack(){
+  WingLState = !WingLState;
+  WingRState = WingLState;
+  WingL.set(WingLState);
+  WingR.set(WingRState);
+}
+//Y left
+void y_CallBack(){
+  WingLState = !WingLState;
+  WingL.set(WingLState);
+}
+//A right
+void a_CallBack(){
+  WingRState = !WingRState;
+  WingR.set(WingRState);
+}
+//B Foot
+void b_CallBack(){
+  FootState = !FootState;
+  Foot.set(FootState);
+}
 
-// VEXcode generated functions
+void LiftToggle(std::string state){
+  while(true){
+    if (state == "up"){
+      Lift.spin(directionType::fwd, 100, velocityUnits::pct);
+      Lift.setBrake(brakeType::brake);
+    }
+    else if (state == "down"){
+      Lift.spin(directionType::rev, 100, velocityUnits::pct);
+      Lift.setBrake(brakeType::coast);
+  }
+
+  if (Lift.torque(torqueUnits::Nm) > 1.5){
+    Lift.stop();
+    break;
+  }
+}
 
 
-
-/**
+/** 
  * Used to initialize code/tasks/devices added using tools in VEXcode Pro.
  * 
  * This should be called at the start of your int main function.
