@@ -1,5 +1,5 @@
 #include "vex.h"
-
+#include <string>
 using namespace vex;
 competition Competition;
 
@@ -100,6 +100,10 @@ void pre_auton(void) {
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
   default_constants();
+  WingL.set(false);
+  WingR.set(false);
+  Foot.set(true);
+  
 
   while(auto_started == false){            //Changing the names below will only change their names on the
     Brain.Screen.clearScreen();            //brain screen for auton selection.
@@ -179,6 +183,27 @@ void autonomous(void) {
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
 
+void LiftToggle(std::string state){
+  if (state == "up"){
+    Lift.spin(directionType::fwd, 100, velocityUnits::pct);
+    Lift.setBrake(brakeType::brake);
+  }else if (state == "down"){
+    Lift.spin(directionType::rev, 100, velocityUnits::pct);
+    Lift.setBrake(brakeType::coast);
+    liftLocker.set(false);
+  }
+  while(true){
+    if ((Lift.torque(torqueUnits::Nm) > 1.5) && (state == "down")){
+      Lift.stop();
+      break;
+    }else if (Lift.torque(torqueUnits::Nm) > 2.1 && (state == "up")){
+      Lift.stop();
+      liftLocker.set(true);
+      break;
+    }
+  }
+}
+
 void usercontrol(void) {
   // User control code here, inside the loop
 
@@ -186,6 +211,14 @@ void usercontrol(void) {
   Controller1.ButtonY.pressed(y_CallBack);
   Controller1.ButtonA.pressed(a_CallBack);
   Controller1.ButtonB.pressed(b_CallBack);
+  
+  //NEW CODING TECHNIQUE FOR CALLBACKS
+  Controller1.ButtonLeft.pressed([](){
+    bool state = !hanger.value();
+    hanger.set(state);
+  });
+  /////////////////////////////////
+  Foot.set(false);
 
   while (1) {
     
@@ -204,28 +237,22 @@ void usercontrol(void) {
     else
       Intake.stop(brakeType::brake);
     
+    // if (Controller1.ButtonDown.pressing()){
+    //   Lift.spin(directionType::rev, 100, velocityUnits::pct); 
+    //   Lift.setBrake(brakeType::coast);
+    // }
+    // else if (Controller1.ButtonUp.pressing())
+    //   Lift.spin(directionType::fwd, 100, velocityUnits::pct);
+    // else
+    //   Lift.stop(brakeType::brake);
     if (Controller1.ButtonDown.pressing()){
-      Lift.spin(directionType::rev, 100, velocityUnits::pct); 
-      Lift.setBrake(brakeType::coast);
+      LiftToggle("down");
     }
     else if (Controller1.ButtonUp.pressing())
-      Lift.spin(directionType::fwd, 100, velocityUnits::pct);
-    else
-      Lift.stop(brakeType::brake);
-    
-    /* if (Controller1.ButtonB.pressing())
-      Foot.set(true);
-    else if (Controller1.ButtonY.pressing())
-      Foot.set(false);
-    
-    if (Controller1.ButtonX.pressing()){
-      WingL.set(true);
-      WingR.set(true);
-    }
-    else if (Controller1.ButtonA.pressing()){
-      WingL.set(false);
-      WingR.set(false);
-    } */
+      LiftToggle("up");
+  
+  
+
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.
   }

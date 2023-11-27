@@ -20,8 +20,6 @@ extern inertial Inertial;
 
 extern motor Intake;
 
-extern triport ThreeWirePort;
-
 extern digital_out WingL;
 extern digital_out WingR;
 extern digital_out Foot;
@@ -30,7 +28,8 @@ extern void x_CallBack();
 extern void y_CallBack();
 extern void a_CallBack();
 extern void b_CallBack();
-
+extern digital_out liftLocker;
+extern digital_out hanger;
 // VEXcode devices
 
 /**

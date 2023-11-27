@@ -43,11 +43,16 @@ void ArcadeControl(int forward, int turn, int deadzone){
 
 }
 
-triport ThreeWirePort(PORT7);
+triport ThreeWirePort = triport(PORT7);
 
-digital_out WingL(ThreeWirePort.A);
-digital_out WingR(ThreeWirePort.C);
-digital_out Foot(ThreeWirePort.B);
+digital_out WingL(Brain.ThreeWirePort.A);
+digital_out WingR(Brain.ThreeWirePort.C);
+digital_out Foot(Brain.ThreeWirePort.B);
+digital_out liftLocker(ThreeWirePort.D);
+digital_out hanger(ThreeWirePort.E);
+
+
+
 
 //Pneumatic Variable Setup
 bool WingLState = false;
@@ -76,22 +81,8 @@ void b_CallBack(){
   Foot.set(FootState);
 }
 
-void LiftToggle(std::string state){
-  while(true){
-    if (state == "up"){
-      Lift.spin(directionType::fwd, 100, velocityUnits::pct);
-      Lift.setBrake(brakeType::brake);
-    }else if (state == "down"){
-      Lift.spin(directionType::rev, 100, velocityUnits::pct);
-      Lift.setBrake(brakeType::coast);
-    }
 
-    if (Lift.torque(torqueUnits::Nm) > 1.5){
-      Lift.stop();
-      break;
-    }
-  }
-}
+
 
 
 /** 
