@@ -100,43 +100,26 @@ void pre_auton(void) {
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
   default_constants();
-  WingL.set(false);
-  WingR.set(false);
-  Foot.set(true);
   
 
   while(auto_started == false){            //Changing the names below will only change their names on the
     Brain.Screen.clearScreen();            //brain screen for auton selection.
     switch(current_auton_selection){       //Tap the brain screen to cycle through autons.
       case 0:
-        Brain.Screen.printAt(50, 50, "Drive Test");
+        Brain.Screen.printAt(50, 50, "Close Side Competition");
         break;
       case 1:
-        Brain.Screen.printAt(50, 50, "Drive Test");
+        Brain.Screen.printAt(50, 50, "Far Side Competition");
         break;
       case 2:
-        Brain.Screen.printAt(50, 50, "Turn Test");
+        Brain.Screen.printAt(50, 50, "Skills");
         break;
-      case 3:
-        Brain.Screen.printAt(50, 50, "Swing Test");
-        break;
-      case 4:
-        Brain.Screen.printAt(50, 50, "Full Test");
-        break;
-      case 5:
-        Brain.Screen.printAt(50, 50, "Odom Test");
-        break;
-      case 6:
-        Brain.Screen.printAt(50, 50, "Tank Odom Test");
-        break;
-      case 7:
-        Brain.Screen.printAt(50, 50, "Holonomic Odom Test");
-        break;
+
     }
     if(Brain.Screen.pressing()){
       while(Brain.Screen.pressing()) {}
       current_auton_selection ++;
-    } else if (current_auton_selection == 8){
+    } else if (current_auton_selection == 3){
       current_auton_selection = 0;
     }
     task::sleep(10);
@@ -147,29 +130,15 @@ void autonomous(void) {
   auto_started = true;
   switch(current_auton_selection){  
     case 0:
-      drive_test(); //This is the default auton, if you don't select from the brain.
+      newCloseSide(); //This is the default auton, if you don't select from the brain.
       break;        //Change these to be your own auton functions in order to use the auton selector.
     case 1:         //Tap the screen to cycle through autons.
-      drive_test();
+      farSide();
       break;
     case 2:
-      turn_test();
+      skills();
       break;
-    case 3:
-      swing_test();
-      break;
-    case 4:
-      full_test();
-      break;
-    case 5:
-      odom_test();
-      break;
-    case 6:
-      tank_odom_test();
-      break;
-    case 7:
-      holonomic_odom_test();
-      break;
+    
  }
 }
 
@@ -183,76 +152,41 @@ void autonomous(void) {
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
 
-void LiftToggle(std::string state){
-  if (state == "up"){
-    Lift.spin(directionType::fwd, 100, velocityUnits::pct);
-    Lift.setBrake(brakeType::brake);
-  }else if (state == "down"){
-    Lift.spin(directionType::rev, 100, velocityUnits::pct);
-    Lift.setBrake(brakeType::coast);
-    liftLocker.set(false);
-  }
-  while(true){
-    if ((Lift.torque(torqueUnits::Nm) > 1.5) && (state == "down")){
-      Lift.stop();
-      break;
-    }else if (Lift.torque(torqueUnits::Nm) > 2.1 && (state == "up")){
-      Lift.stop();
-      liftLocker.set(true);
-      break;
-    }
-  }
-}
+
 
 void usercontrol(void) {
   // User control code here, inside the loop
 
-  Controller1.ButtonX.pressed(x_CallBack);
-  Controller1.ButtonY.pressed(y_CallBack);
-  Controller1.ButtonA.pressed(a_CallBack);
-  Controller1.ButtonB.pressed(b_CallBack);
+  Controller1.ButtonX.pressed(X_CallBack);
+  Controller1.ButtonY.pressed(Y_CallBack);
+  Controller1.ButtonA.pressed(A_CallBack);
+  Controller1.ButtonB.pressed(B_CallBack);
   
   //NEW CODING TECHNIQUE FOR CALLBACKS
-  Controller1.ButtonLeft.pressed([](){
+  Controller1.ButtonRight.pressed([](){
     bool state = !hanger.value();
     hanger.set(state);
   });
   /////////////////////////////////
-  Foot.set(false);
+  rear_jack.set(false);
 
   while (1) {
-    
     chassis.control_arcade();
-    
 
     if (Controller1.ButtonR1.pressing())
       Puncher.spin(directionType::fwd, 100, velocityUnits::pct);
     else if (Controller1.ButtonR2.pressing())
       Puncher.stop(brakeType::coast);
-  
     if (Controller1.ButtonL1.pressing())
       Intake.spin(directionType::fwd, 100, velocityUnits::pct);
     else if (Controller1.ButtonL2.pressing())
       Intake.spin(directionType::rev, 100, velocityUnits::pct);
     else
       Intake.stop(brakeType::brake);
-    
-    // if (Controller1.ButtonDown.pressing()){
-    //   Lift.spin(directionType::rev, 100, velocityUnits::pct); 
-    //   Lift.setBrake(brakeType::coast);
-    // }
-    // else if (Controller1.ButtonUp.pressing())
-    //   Lift.spin(directionType::fwd, 100, velocityUnits::pct);
-    // else
-    //   Lift.stop(brakeType::brake);
-    if (Controller1.ButtonDown.pressing()){
+    if (Controller1.ButtonDown.pressing())
       LiftToggle("down");
-    }
     else if (Controller1.ButtonUp.pressing())
       LiftToggle("up");
-  
-  
-
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.
   }
