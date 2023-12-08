@@ -34,7 +34,15 @@ void skills()
   rear_jack.set(false);
   wait(1, timeUnits::sec);
 
-  chassis.left_swing_to_angle(65);
+  chassis.left_swing_to_angle(65,
+                              chassis.swing_max_voltage,
+                              chassis.swing_settle_error,
+                              chassis.swing_settle_time,
+                              900,
+                              chassis.swing_kp,
+                              chassis.swing_ki,
+                              chassis.swing_kd,
+                              chassis.swing_starti);
   vex::task::sleep(1);
   rear_jack.set(true);
   LiftToggle("up");
@@ -46,33 +54,68 @@ void skills()
   wait(.5, sec);
   rear_jack.set(false);
   wait(300, timeUnits::msec);
-  chassis.turn_to_angle(-70);
+  chassis.turn_to_angle(-65,
+                        chassis.turn_max_voltage,
+                        chassis.turn_settle_error,
+                        chassis.turn_settle_time,
+                        800);
   wait(200, msec);
   // drive to other side of field
-  chassis.drive_distance(-9, -70);
+  chassis.drive_distance(-9, -70, 12,chassis.heading_max_voltage);
   wait(200, msec);
-  chassis.turn_to_angle(-88);
-  chassis.drive_distance(-50, chassis.desired_heading, 11, chassis.heading_max_voltage);
+  chassis.turn_to_angle(-88,
+                        chassis.turn_max_voltage,
+                        chassis.turn_settle_error,
+                        chassis.turn_settle_time,
+                        800);
+  chassis.drive_distance(-55, chassis.desired_heading, 12, chassis.heading_max_voltage);
   // intake_air.set(true); //intake is up
-  chassis.left_swing_to_angle(-180);
+  chassis.left_swing_to_angle(-180,
+                              chassis.swing_max_voltage,
+                              chassis.swing_settle_error,
+                              chassis.swing_settle_time,
+                              900,
+                              chassis.swing_kp,
+                              chassis.swing_ki,
+                              chassis.swing_kd,
+                              chassis.swing_starti);
   wait(1, msec);
   wingValve(true);
   chassis.drive_distance(-15, chassis.desired_heading, 12, chassis.heading_max_voltage);
   wait(1, msec);
-  wingValve(false);
-
   chassis.drive_distance(17);
+  chassis.drive_distance(-19,chassis.desired_heading, 12,chassis.heading_max_voltage,chassis.drive_settle_error,chassis.drive_settle_time,800);
+  wingValve(false);
+  chassis.drive_distance(17,chassis.desired_heading, 12,chassis.heading_max_voltage,chassis.drive_settle_error,chassis.drive_settle_time,800);
   left_wing.set(false);
   wait(1, msec);
-  chassis.turn_to_angle(-205);
+  chassis.turn_to_angle(-205,
+                        chassis.turn_max_voltage,
+                        chassis.turn_settle_error,
+                        chassis.turn_settle_time,
+                        800);
   wait(1, msec);
-  chassis.drive_distance(-35, chassis.desired_heading, 11, chassis.heading_max_voltage);
+  chassis.drive_distance(-35, chassis.desired_heading, 12, chassis.heading_max_voltage);
   wait(1, msec);
-  chassis.right_swing_to_angle(-90);
+  chassis.right_swing_to_angle(-90,
+                              chassis.swing_max_voltage,
+                              chassis.swing_settle_error,
+                              chassis.swing_settle_time,
+                              900,
+                              chassis.swing_kp,
+                              chassis.swing_ki,
+                              chassis.swing_kd,
+                              chassis.swing_starti);
   wait(1, msec);
   wingValve(true);
   chassis.drive_distance(-14, chassis.desired_heading, 12, chassis.heading_max_voltage);
   wait(1, msec);
+  chassis.drive_distance(12,chassis.desired_heading,12, chassis.heading_max_voltage);
+  vex::task::sleep(1);
+  chassis.drive_distance(-16,chassis.desired_heading,12,chassis.heading_max_voltage);
+  vex::task::sleep(1);
+  chassis.drive_distance(12,chassis.desired_heading,12, chassis.heading_max_voltage);
+  
 }
 
 void newCloseSide()
@@ -440,7 +483,7 @@ void farSide()
                         chassis.turn_ki,
                         chassis.turn_kd,
                         chassis.turn_starti);
-Intake.spinFor(10, rotationUnits::rev, 100, velocityUnits::pct, false);
+  Intake.spinFor(10, rotationUnits::rev, 100, velocityUnits::pct, false);
   chassis.drive_distance(14,
                          chassis.desired_heading,
                          12,
@@ -450,7 +493,8 @@ Intake.spinFor(10, rotationUnits::rev, 100, velocityUnits::pct, false);
                          timeout);
 }
 
-void screw_OLA(){
+void screw_OLA()
+{
   // setting up the robot
   int MAXVOLTAGE = 12;
   rear_jack.set(false);
@@ -465,13 +509,12 @@ void screw_OLA(){
 
   // Time for the fun stuff
   int timeout = 1250;
-//Drops and intakes Colored Triball
+  // Drops and intakes Colored Triball
   Intake.spinFor(-10, rotationUnits::rev, 100, velocityUnits::pct, false);
   vex::task::sleep(500);
   Intake.stop();
 
-  
-// Drives halfway to the field and turns left to out take colored triball
+  // Drives halfway to the field and turns left to out take colored triball
   chassis.drive_distance(28, -90, MAXVOLTAGE, chassis.heading_max_voltage, chassis.drive_settle_error, chassis.drive_settle_time, timeout);
 
   chassis.left_swing_to_angle(-180,
@@ -484,13 +527,12 @@ void screw_OLA(){
                               chassis.swing_kd,
                               chassis.swing_starti);
 
-Intake.spinFor(10, rotationUnits::rev, 100, velocityUnits::pct, false);
+  Intake.spinFor(10, rotationUnits::rev, 100, velocityUnits::pct, false);
   vex::task::sleep(500);
   Intake.stop();
 
-
-//Turns right, to return back to its course to intake the end triball
-chassis.left_swing_to_angle(-90,
+  // Turns right, to return back to its course to intake the end triball
+  chassis.left_swing_to_angle(-90,
                               chassis.swing_max_voltage,
                               chassis.swing_settle_error,
                               chassis.swing_settle_time,
@@ -499,8 +541,6 @@ chassis.left_swing_to_angle(-90,
                               chassis.swing_ki,
                               chassis.swing_kd,
                               chassis.swing_starti);
-
-
 
   chassis.drive_distance(13, -90, MAXVOLTAGE, chassis.heading_max_voltage, chassis.drive_settle_error, chassis.drive_settle_time, timeout);
 
@@ -511,7 +551,7 @@ chassis.left_swing_to_angle(-90,
   // Drives back, turns right, and outakes triball over the middle beam
   chassis.drive_distance(-10, -90, MAXVOLTAGE, chassis.heading_max_voltage, chassis.drive_settle_error, chassis.drive_settle_time, timeout);
 
-chassis.left_swing_to_angle(-44,
+  chassis.left_swing_to_angle(-44,
                               chassis.swing_max_voltage,
                               chassis.swing_settle_error,
                               chassis.swing_settle_time,
@@ -521,8 +561,8 @@ chassis.left_swing_to_angle(-44,
                               chassis.swing_kd,
                               chassis.swing_starti);
 
-Intake.spinFor(10, rotationUnits::rev, 100, velocityUnits::pct, false);
-vex::task::sleep(250);                   
+  Intake.spinFor(10, rotationUnits::rev, 100, velocityUnits::pct, false);
+  vex::task::sleep(250);
   chassis.drive_distance(11,
                          chassis.desired_heading,
                          12,
@@ -532,10 +572,8 @@ vex::task::sleep(250);
                          timeout);
   Intake.stop();
 
-
-
-// Drives back, turns left and intakes middle triball
-   chassis.drive_distance(-7,
+  // Drives back, turns left and intakes middle triball
+  chassis.drive_distance(-7,
                          chassis.desired_heading,
                          12,
                          chassis.heading_max_voltage,
@@ -561,15 +599,15 @@ vex::task::sleep(250);
                          timeout);
   Intake.stop();
 
-// drives backward, turns right, and drives forward while outaking
-chassis.drive_distance(-10,
+  // drives backward, turns right, and drives forward while outaking
+  chassis.drive_distance(-10,
                          chassis.desired_heading,
                          12,
                          chassis.heading_max_voltage,
                          chassis.drive_settle_error,
                          chassis.drive_settle_time,
                          timeout);
-chassis.left_swing_to_angle(-45,
+  chassis.left_swing_to_angle(-45,
                               chassis.swing_max_voltage,
                               chassis.swing_settle_error,
                               chassis.swing_settle_time,
@@ -578,8 +616,8 @@ chassis.left_swing_to_angle(-45,
                               chassis.swing_ki,
                               chassis.swing_kd,
                               chassis.swing_starti);
-Intake.spinFor(10, rotationUnits::rev, 100, velocityUnits::pct, false);
-vex::task::sleep(250);                   
+  Intake.spinFor(10, rotationUnits::rev, 100, velocityUnits::pct, false);
+  vex::task::sleep(250);
   chassis.drive_distance(10,
                          chassis.desired_heading,
                          12,
@@ -588,21 +626,19 @@ vex::task::sleep(250);
                          chassis.drive_settle_time,
                          timeout);
   Intake.stop();
-
-//Then drives backward full speed to score our colored triball in the opponents goal, then drives forward
-chassis.drive_distance(-25,
+  // Then drives backward full speed to score our colored triball in the opponents goal, then drives forward
+  chassis.drive_distance(-25,
                          chassis.desired_heading,
                          12,
                          chassis.heading_max_voltage,
                          chassis.drive_settle_error,
                          chassis.drive_settle_time,
                          timeout);
-chassis.drive_distance(10,
+  chassis.drive_distance(10,
                          chassis.desired_heading,
                          12,
                          chassis.heading_max_voltage,
                          chassis.drive_settle_error,
                          chassis.drive_settle_time,
                          timeout);
-
 }
