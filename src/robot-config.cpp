@@ -24,7 +24,7 @@ motor_group rightDrive(rightFront, rightMiddle, rightBack);
 
 controller Controller1(primary);
 
-motor Lift(PORT20, gearSetting::ratio36_1, false);
+motor Lift(PORT18, gearSetting::ratio36_1, false);
 motor Puncher(PORT11, gearSetting::ratio36_1, false);
 inertial Inertial(PORT6);
 

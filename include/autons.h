@@ -11,3 +11,4 @@ void farSide();
 void closeSide();
 void skills();
 void newCloseSide();
+void screw_OLA();
