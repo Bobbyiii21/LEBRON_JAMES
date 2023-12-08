@@ -112,8 +112,12 @@ void pre_auton(void) {
         Brain.Screen.printAt(50, 50, "Far Side Competition");
         break;
       case 2:
-        Brain.Screen.printAt(50, 50, "Skills");
+        Brain.Screen.printAt(50, 50, "Oppa Stoppa");
         break;
+      case 3:
+        Brain.Screen.printAt(50, 50, "skills");
+        break;
+
 
     }
     if(Brain.Screen.pressing()){
@@ -130,12 +134,15 @@ void autonomous(void) {
   auto_started = true;
   switch(current_auton_selection){  
     case 0:
-      skills(); //This is the default auton, if you don't select from the brain.
+      newCloseSide(); //This is the default auton, if you don't select from the brain.
       break;        //Change these to be your own auton functions in order to use the auton selector.
     case 1:         //Tap the screen to cycle through autons.
       farSide();
       break;
     case 2:
+      screw_OLA();
+      break;
+    case 4:
       skills();
       break;
     
