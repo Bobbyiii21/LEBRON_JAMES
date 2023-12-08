@@ -38,12 +38,14 @@ extern vex::event telemetry;
 
 extern void intakeUntilObject();
 extern event intakeEvent;
-
+extern void spinChassisMAX(int time);
 extern void LiftToggle(std::string state);
 extern void wingValve(bool state);
-
+void quitEvent();
 extern event intakeInEvent;
 extern event intakeOutEvent;
+void intakeControl(std::string value);
+void spinChassisReverseMAX(int time);
 
 // VEXcode devices
 

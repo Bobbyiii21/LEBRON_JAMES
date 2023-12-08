@@ -130,7 +130,7 @@ void autonomous(void) {
   auto_started = true;
   switch(current_auton_selection){  
     case 0:
-      newCloseSide(); //This is the default auton, if you don't select from the brain.
+      farSide(); //This is the default auton, if you don't select from the brain.
       break;        //Change these to be your own auton functions in order to use the auton selector.
     case 1:         //Tap the screen to cycle through autons.
       farSide();
@@ -156,7 +156,7 @@ void autonomous(void) {
 
 void usercontrol(void) {
   // User control code here, inside the loop
-
+  Intake.spinFor(-90,degrees);
   Controller1.ButtonX.pressed(X_CallBack);
   Controller1.ButtonY.pressed(Y_CallBack);
   Controller1.ButtonA.pressed(A_CallBack);

@@ -98,7 +98,9 @@ void phoneHome()
   while (true)
   {
     printf("X: %f    Y: %f   Theta: %f\n", chassis.get_X_position(), chassis.get_Y_position(), chassis.get_absolute_heading());
-    task::sleep(1000);
+    printf("Lift: %f\n", Lift.torque(torqueUnits::Nm));
+    printf("Intake: %f\n", intakeDistance.objectDistance(distanceUnits::mm));
+    task::sleep(500);
   }
 }
 vex::event telemetry(phoneHome);
@@ -147,37 +149,128 @@ void intakeUntilObject()
   }
 }
 
-void intakeFunctions(void* arg) {
-  if (arg == "in")
-    while (1)
+// void intakeIn(){
+//     while (1)
+//     {
+//       Intake.spin(directionType::rev, 400, velocityUnits::rpm);
+//       if (intakeDistance.objectDistance(distanceUnits::mm) < 30)
+//       {
+//         Intake.setBrake(brakeType::brake);
+//         Intake.stop();
+//         // task::sleep(5000);
+//         break;
+//       }
+//       task::sleep(20);
+//     }
+bool quitEvent_b = false;
+void quitEvent()
+{
+  quitEvent_b = true;
+}
+
+void intakeIn()
+{
+  if (quitEvent_b == true)
+  {
+    quitEvent_b = false;
+  }
+  while (1)
+  {
+    while (intakeDistance.objectDistance(distanceUnits::mm) > 2)
     {
-      Intake.spin(directionType::fwd, 400, velocityUnits::rpm);
-      if (intakeDistance.objectDistance(distanceUnits::mm) < 10)
+      Intake.spin(directionType::rev, 400, velocityUnits::rpm);
+      vex::task::sleep(10);
+
+      if (quitEvent_b == true)
       {
-        Intake.spin(directionType::fwd, 0, velocityUnits::rpm);
-        // task::sleep(5000);
         break;
       }
-      task::sleep(20);
     }
-  if (arg == "out")
+
+    Intake.setBrake(brakeType::hold);
+    Intake.stop();
+    if (quitEvent_b == true)
+    {
+      break;
+    }
+    vex::task::sleep(10);
+  }
+}
+void intakeOut()
+{
+  if (quitEvent_b == true)
+  {
+    quitEvent_b = false;
+  }
+  while (1)
+  {
+    while (intakeDistance.objectDistance(distanceUnits::mm) < 15)
+    {
+      Intake.spin(directionType::fwd, 400, velocityUnits::rpm);
+      vex::task::sleep(10);
+
+      if (quitEvent_b == true)
+      {
+        break;
+      }
+    }
+    Intake.setBrake(brakeType::brake);
+    Intake.stop();
+    if (quitEvent_b == true)
+    {
+      break;
+    }
+    vex::task::sleep(10);
+  }
+}
+
+event intakeInEvent = event(intakeIn);
+event intakeOutEvent = event(intakeOut);
+
+void intakeControl(std::string value){
+  if(value == "in"){
     while (1)
     {
       Intake.spin(directionType::rev, 400, velocityUnits::rpm);
-      if (intakeDistance.objectDistance(distanceUnits::mm) > 10)
+      if (intakeDistance.objectDistance(distanceUnits::mm) < 30)
       {
-        Intake.spin(directionType::fwd, 0, velocityUnits::rpm);
-        // task::sleep(5000);
+        Intake.setBrake(brakeType::brake);
+        Intake.stop();
         break;
       }
-      task::sleep(20);
+      vex::task::sleep(10);
     }
+  }else if(value == "out"){
+    while (1)
+    {
+      Intake.spin(directionType::fwd, 400, velocityUnits::rpm);
+      if (intakeDistance.objectDistance(distanceUnits::mm) < 30)
+      {
+        Intake.setBrake(brakeType::brake);
+        Intake.stop();
+        break;
+      }
+      vex::task::sleep(10);
+    }
+  }
 }
-    
-  std::string in = "in";
-  std::string out = "out";
-  event intakeInEvent = event(intakeFunctions, &in);
-  event intakeOutEvent = event(intakeFunctions, &out);
+
+void spinChassisMAX(int time)
+{
+  rightDrive.spin(directionType::fwd, 12, voltageUnits::volt);
+  leftDrive.spin(directionType::fwd, 12, voltageUnits::volt);
+  wait(time, timeUnits::msec);
+  rightDrive.stop();
+  leftDrive.stop();
+}
+void spinChassisReverseMAX(int time)
+{
+  rightDrive.spin(directionType::rev, 12, voltageUnits::volt);
+  leftDrive.spin(directionType::rev, 12, voltageUnits::volt);
+  wait(time, timeUnits::msec);
+  rightDrive.stop();
+  leftDrive.stop();
+}
 
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Pro.
@@ -186,5 +279,6 @@ void intakeFunctions(void* arg) {
  */
 void vexcodeInit(void)
 {
+  rear_jack.set(true);
   // nothing to initialize
 }
