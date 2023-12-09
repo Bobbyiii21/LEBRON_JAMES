@@ -123,7 +123,7 @@ void pre_auton(void) {
     if(Brain.Screen.pressing()){
       while(Brain.Screen.pressing()) {}
       current_auton_selection ++;
-    } else if (current_auton_selection == 3){
+    } else if (current_auton_selection == 4){
       current_auton_selection = 0;
     }
     task::sleep(10);
@@ -142,7 +142,7 @@ void autonomous(void) {
     case 2:
       screw_OLA();
       break;
-    case 4:
+    case 3:
       skills();
       break;
     
