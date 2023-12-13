@@ -666,15 +666,15 @@ void screw_OLA()
                                MAXVOLTAGE,
                                chassis.swing_settle_error,
                                chassis.swing_settle_time,
-                               800,
+                               700,
                                chassis.swing_kp,
                                chassis.swing_ki,
                                chassis.swing_kd,
                                chassis.swing_starti);
-  chassis.drive_distance(28,40,MAXVOLTAGE,chassis.heading_max_voltage,chassis.drive_settle_error,chassis.drive_settle_time,timeout);
+  chassis.drive_distance(26,45,MAXVOLTAGE,chassis.heading_max_voltage,chassis.drive_settle_error,chassis.drive_settle_time,timeout);
   Intake.spinFor(-10, rotationUnits::rev, 100, velocityUnits::pct, false);
-  vex::task::sleep(100);
-  chassis.drive_distance(14,40,MAXVOLTAGE,chassis.heading_max_voltage,chassis.drive_settle_error,chassis.drive_settle_time,timeout);
+  vex::task::sleep(120);
+  chassis.drive_distance(12,40,MAXVOLTAGE,chassis.heading_max_voltage,chassis.drive_settle_error,chassis.drive_settle_time,timeout);
   chassis.drive_distance(-6,40,MAXVOLTAGE,chassis.heading_max_voltage,chassis.drive_settle_error,chassis.drive_settle_time,timeout);
   chassis.right_swing_to_angle(90,
                                MAXVOLTAGE,
@@ -686,9 +686,9 @@ void screw_OLA()
                                chassis.swing_kd,
                                chassis.swing_starti);
 
-  Intake.spinFor(10, rotationUnits::rev, 100, velocityUnits::pct, false);
-  chassis.drive_distance(10,90,MAXVOLTAGE,chassis.heading_max_voltage,chassis.drive_settle_error,chassis.drive_settle_time,800);
-  chassis.drive_distance(-8,90,MAXVOLTAGE,chassis.heading_max_voltage,chassis.drive_settle_error,chassis.drive_settle_time,800);
+  Intake.spinFor(12, rotationUnits::rev, 100, velocityUnits::pct, false);
+  chassis.drive_distance(12,90,MAXVOLTAGE,chassis.heading_max_voltage,chassis.drive_settle_error,chassis.drive_settle_time,650);
+  chassis.drive_distance(-8,85,MAXVOLTAGE,chassis.heading_max_voltage,chassis.drive_settle_error,chassis.drive_settle_time,650);
   chassis.left_swing_to_angle(0,
                                MAXVOLTAGE,
                                chassis.swing_settle_error,
@@ -698,10 +698,30 @@ void screw_OLA()
                                chassis.swing_ki,
                                chassis.swing_kd,
                                chassis.swing_starti);
-  Intake.spinFor(-10, rotationUnits::rev, 100, velocityUnits::pct, false);
-  chassis.drive_distance(6,0,MAXVOLTAGE,chassis.heading_max_voltage,chassis.drive_settle_error,chassis.drive_settle_time,800);
-  chassis.drive_distance(-6,0,MAXVOLTAGE,chassis.heading_max_voltage,chassis.drive_settle_error,chassis.drive_settle_time,800);
-  chassis.right_swing_to_angle(90,
+  Intake.spinFor(-8, rotationUnits::rev, 100, velocityUnits::pct, false);
+  chassis.drive_distance(7,0,MAXVOLTAGE,chassis.heading_max_voltage,chassis.drive_settle_error,chassis.drive_settle_time,500);
+  chassis.drive_distance(-30,-190,MAXVOLTAGE,chassis.heading_max_voltage,chassis.drive_settle_error,chassis.drive_settle_time,500);
+
+  // Original Auton
+  //chassis.right_swing_to_angle(90,
+ //                              MAXVOLTAGE,
+ //                              chassis.swing_settle_error,
+ //                              chassis.swing_settle_time,
+   //                            600,
+     //                          chassis.swing_kp,
+       //                        chassis.swing_ki,
+         //                      chassis.swing_kd,
+           //                    chassis.swing_starti);
+ // Intake.spinFor(10, rotationUnits::rev, 100, velocityUnits::pct, false);
+  //chassis.drive_distance(18,90,MAXVOLTAGE,chassis.heading_max_voltage,chassis.drive_settle_error,chassis.drive_settle_time,800);
+
+
+ // 6 secs left (Going to clip the acorn out the corner)
+chassis.drive_distance(-28,120,MAXVOLTAGE,chassis.heading_max_voltage,chassis.drive_settle_error,chassis.drive_settle_time,500);
+chassis.drive_distance(-10,145,MAXVOLTAGE,chassis.heading_max_voltage,chassis.drive_settle_error,chassis.drive_settle_time,500);
+ A_CallBack();
+chassis.drive_distance(5,145,MAXVOLTAGE,chassis.heading_max_voltage,chassis.drive_settle_error,chassis.drive_settle_time,550);
+chassis.right_swing_to_angle(35,
                                MAXVOLTAGE,
                                chassis.swing_settle_error,
                                chassis.swing_settle_time,
@@ -710,13 +730,23 @@ void screw_OLA()
                                chassis.swing_ki,
                                chassis.swing_kd,
                                chassis.swing_starti);
-  chassis.drive_distance(10,90,MAXVOLTAGE,chassis.heading_max_voltage,chassis.drive_settle_error,chassis.drive_settle_time,800);
+ A_CallBack();
+chassis.left_swing_to_angle(110,
+                               MAXVOLTAGE,
+                               chassis.swing_settle_error,
+                               chassis.swing_settle_time,
+                               600,
+                               chassis.swing_kp,
+                               chassis.swing_ki,
+                               chassis.swing_kd,
+                               chassis.swing_starti);
+Intake.spinFor(10, rotationUnits::rev, 100, velocityUnits::pct, false);
+chassis.drive_distance(15,110,MAXVOLTAGE,chassis.heading_max_voltage,chassis.drive_settle_error,chassis.drive_settle_time,600);
+chassis.drive_distance(8,90,MAXVOLTAGE,chassis.heading_max_voltage,chassis.drive_settle_error,chassis.drive_settle_time,600);
 
-
-
-  
-
-
+//chassis.drive_distance(14,120,MAXVOLTAGE,chassis.heading_max_voltage,chassis.drive_settle_error,chassis.drive_settle_time,600);
+//Intake.spinFor(10, rotationUnits::rev, 100, velocityUnits::pct, false);
+//chassis.drive_distance(15,90,MAXVOLTAGE,chassis.heading_max_voltage,chassis.drive_settle_error,chassis.drive_settle_time,800);
 
 
 }
