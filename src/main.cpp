@@ -93,7 +93,7 @@ PORT3,     -PORT4,
 
 );
 
-int current_auton_selection = 2;
+int current_auton_selection = 4;
 bool auto_started = false;
 
 void pre_auton(void) {
@@ -106,24 +106,29 @@ void pre_auton(void) {
     Brain.Screen.clearScreen();            //brain screen for auton selection.
     switch(current_auton_selection){       //Tap the brain screen to cycle through autons.
       case 0:
-        Brain.Screen.printAt(50, 50, "Close Side Competition");
+        Brain.Screen.printAt(50, 50, "imprvedCloseSide");
         break;
       case 1:
-        Brain.Screen.printAt(50, 50, "Far Side Competition");
+        Brain.Screen.printAt(50, 50, "Close Side Competition");
         break;
       case 2:
-        Brain.Screen.printAt(50, 50, "Oppa Stoppa");
+        Brain.Screen.printAt(50, 50, "Far Side Competition");
         break;
       case 3:
-        Brain.Screen.printAt(50, 50, "skills");
+        Brain.Screen.printAt(50, 50, "GRRA GRRA");
         break;
+      case 4:
+        Brain.Screen.printAt(50, 50, "Autonomus Skills");
+        break;
+
+      
 
 
     }
     if(Brain.Screen.pressing()){
       while(Brain.Screen.pressing()) {}
       current_auton_selection ++;
-    } else if (current_auton_selection == 4){
+    } else if (current_auton_selection == 5){
       current_auton_selection = 0;
     }
     task::sleep(10);
@@ -134,17 +139,21 @@ void autonomous(void) {
   auto_started = true;
   switch(current_auton_selection){  
     case 0:
-      skills(); //This is the default auton, if you don't select from the brain.
-      break;        //Change these to be your own auton functions in order to use the auton selector.
-    case 1:         //Tap the screen to cycle through autons.
+      imprvedCloseSide();
+      break;  
+    case 1:
+      newCloseSide(); //This is the default auton, if you don't select from the brain.
+     break;
+    case 2:
       farSide();
       break;
-    case 2:
-      screw_OLA();
-      break;
     case 3:
+      roscoeDash();
+      break;
+    case 4:
       skills();
       break;
+
     
  }
 }
@@ -163,7 +172,7 @@ void autonomous(void) {
 
 void usercontrol(void) {
   // User control code here, inside the loop
-  Intake.spinFor(-90,degrees);
+  Intake.spinFor(-90,degrees,true);
   Controller1.ButtonX.pressed(X_CallBack);
   Controller1.ButtonY.pressed(Y_CallBack);
   Controller1.ButtonA.pressed(A_CallBack);

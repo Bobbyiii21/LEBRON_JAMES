@@ -22,14 +22,14 @@ motor_group driveMotor(leftFront, leftMiddle, leftBack, rightFront, rightMiddle,
 motor_group leftDrive(leftFront, leftMiddle, leftBack);
 motor_group rightDrive(rightFront, rightMiddle, rightBack);
 
-controller Controller1(primary);
+controller Controller1(controllerType::primary);
 
 motor Lift(PORT18, gearSetting::ratio36_1, false);
-motor Puncher(PORT11, gearSetting::ratio36_1, false);
-inertial Inertial(PORT6);
+motor Puncher(PORT11, gearSetting::ratio36_1, false);//
+inertial Inertial(PORT6);//
 
-motor Intake(PORT12, gearSetting::ratio6_1, false);
-distance intakeDistance(PORT13);
+motor Intake(PORT12, gearSetting::ratio6_1, false);//
+distance intakeDistance(PORT13); //
 
 void ArcadeControl(int forward, int turn, int deadzone)
 {
@@ -125,7 +125,7 @@ void LiftToggle(std::string state)
       Lift.stop();
       break;
     }
-    else if (Lift.torque(torqueUnits::Nm) > 2.1 && (state == "up"))
+    else if (Lift.torque(torqueUnits::Nm) > 2.0 && (state == "up"))
     {
       Lift.stop();
       liftLocker.set(true);
@@ -279,6 +279,5 @@ void spinChassisReverseMAX(int time)
  */
 void vexcodeInit(void)
 {
-  rear_jack.set(true);
   // nothing to initialize
 }
