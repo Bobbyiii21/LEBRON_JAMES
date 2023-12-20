@@ -49,7 +49,7 @@ void skills()
   rear_jack.set(true);
   LiftToggle("up");
   A_CallBack();
-  // Puncher.spinFor(forward, 55, rotationUnits::rev, 600, velocityUnits::rpm, true); // activate puncher
+   Puncher.spinFor(forward, 55, rotationUnits::rev, 600, velocityUnits::rpm, true); // activate puncher
   wait(1, sec);
   LiftToggle("down");
   A_CallBack();
@@ -60,7 +60,7 @@ void skills()
                         chassis.turn_max_voltage,
                         chassis.turn_settle_error,
                         chassis.turn_settle_time,
-                        800);
+                        700);
   // drive to other side of field
   chassis.drive_distance(-13,
                          -70,
@@ -118,6 +118,13 @@ void skills()
                         chassis.turn_settle_time,
                         800);
   A_CallBack();
+  chassis.drive_distance(-10,
+                         chassis.desired_heading,
+                         MAXVOLTAGE,
+                         chassis.heading_max_voltage,
+                         chassis.turn_settle_error,
+                         chassis.turn_settle_time,
+                         800);
   chassis.drive_distance(-18,
                          190,
                          MAXVOLTAGE,
@@ -141,7 +148,7 @@ void skills()
                          chassis.turn_settle_error,
                          chassis.turn_settle_time,
                          800);
-  chassis.right_swing_to_angle(180,
+  chassis.right_swing_to_angle(140,
                                MAXVOLTAGE,
                                chassis.swing_settle_error,
                                chassis.swing_settle_time,
@@ -150,6 +157,59 @@ void skills()
                                chassis.swing_ki,
                                chassis.swing_kd,
                                chassis.swing_starti);
+chassis.drive_distance(-18,
+                         chassis.desired_heading,
+                         MAXVOLTAGE,
+                         chassis.heading_max_voltage,
+                         chassis.turn_settle_error,
+                         chassis.turn_settle_time,
+                         800);
+chassis.right_swing_to_angle(-90,
+                               MAXVOLTAGE,
+                               chassis.swing_settle_error,
+                               chassis.swing_settle_time,
+                               800,
+                               chassis.swing_kp,
+                               chassis.swing_ki,
+                               chassis.swing_kd,
+                               chassis.swing_starti);
+X_CallBack();
+chassis.drive_distance(-20,
+                         chassis.desired_heading,
+                         MAXVOLTAGE,
+                         chassis.heading_max_voltage,
+                         chassis.turn_settle_error,
+                         chassis.turn_settle_time,
+                         800);
+chassis.drive_distance(22,
+                         chassis.desired_heading,
+                         MAXVOLTAGE,
+                         chassis.heading_max_voltage,
+                         chassis.turn_settle_error,
+                         chassis.turn_settle_time,
+                         800);
+chassis.drive_distance(-25,
+                         chassis.desired_heading,
+                         MAXVOLTAGE,
+                         chassis.heading_max_voltage,
+                         chassis.turn_settle_error,
+                         chassis.turn_settle_time,
+                         800);
+chassis.drive_distance(22,
+                         chassis.desired_heading,
+                         MAXVOLTAGE,
+                         chassis.heading_max_voltage,
+                         chassis.turn_settle_error,
+                         chassis.turn_settle_time,
+                         800);
+chassis.drive_distance(-25,
+                         chassis.desired_heading,
+                         MAXVOLTAGE,
+                         chassis.heading_max_voltage,
+                         chassis.turn_settle_error,
+                         chassis.turn_settle_time,
+                         800);
+
 
   // intake_air.set(true); //intake is up
   // chassis.left_swing_to_angle(-120);
