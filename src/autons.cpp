@@ -47,11 +47,11 @@ void skills()
                               chassis.swing_starti);
   vex::task::sleep(1);
   rear_jack.set(true);
-  LiftToggle("up");
+  //LiftToggle("up");
   A_CallBack();
-   Puncher.spinFor(forward, 55, rotationUnits::rev, 600, velocityUnits::rpm, true); // activate puncher
+   //Puncher.spinFor(forward, 55, rotationUnits::rev, 600, velocityUnits::rpm, true); // activate puncher
   wait(1, sec);
-  LiftToggle("down");
+  //LiftToggle("down");
   A_CallBack();
   wait(.5, sec);
   rear_jack.set(false);
@@ -74,7 +74,7 @@ void skills()
                         chassis.turn_settle_error,
                         chassis.turn_settle_time,
                         800);
-  chassis.drive_distance(-60,
+  chassis.drive_distance(-50,
                          chassis.desired_heading,
                          MAXVOLTAGE,
                          chassis.heading_max_voltage,
@@ -82,7 +82,7 @@ void skills()
                          chassis.turn_settle_time,
                          1500);
   chassis.drive_distance(-15,
-                         -165,
+                         -160,
                          MAXVOLTAGE,
                          chassis.heading_max_voltage,
                          chassis.turn_settle_error,
@@ -188,24 +188,31 @@ chassis.drive_distance(22,
                          chassis.turn_settle_error,
                          chassis.turn_settle_time,
                          800);
-chassis.drive_distance(-25,
+chassis.drive_distance(-30,
                          chassis.desired_heading,
                          MAXVOLTAGE,
                          chassis.heading_max_voltage,
                          chassis.turn_settle_error,
                          chassis.turn_settle_time,
                          800);
-chassis.drive_distance(22,
+chassis.drive_distance(30,
                          chassis.desired_heading,
                          MAXVOLTAGE,
                          chassis.heading_max_voltage,
                          chassis.turn_settle_error,
                          chassis.turn_settle_time,
                          800);
-chassis.drive_distance(-25,
+chassis.drive_distance(-30,
                          chassis.desired_heading,
                          MAXVOLTAGE,
                          chassis.heading_max_voltage,
+                         chassis.turn_settle_error,
+                         chassis.turn_settle_time,
+                         850);
+ chassis.drive_distance(15,
+                         180,
+                         MAXVOLTAGE,
+                         5,
                          chassis.turn_settle_error,
                          chassis.turn_settle_time,
                          800);
