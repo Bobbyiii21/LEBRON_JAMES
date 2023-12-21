@@ -81,8 +81,11 @@ void skills()
                          chassis.turn_settle_error,
                          chassis.turn_settle_time,
                          1500);
+
+
+//Corner Area
   chassis.drive_distance(-15,
-                         -160,
+                         -155,
                          MAXVOLTAGE,
                          chassis.heading_max_voltage,
                          chassis.turn_settle_error,
@@ -96,14 +99,22 @@ void skills()
                          chassis.turn_settle_time,
                          800);
   chassis.drive_distance(15,
-                         chassis.desired_heading,
+                         210,
                          MAXVOLTAGE,
                          chassis.heading_max_voltage,
                          chassis.turn_settle_error,
                          chassis.turn_settle_time,
-                         800);
+                         900);
+chassis.drive_distance(-8,
+                         -155,
+                         MAXVOLTAGE,
+                         chassis.heading_max_voltage,
+                         chassis.turn_settle_error,
+                         chassis.turn_settle_time,
+                         900);
+spinChassisReverseMAX(800);
 
-  spinChassisReverseMAX(800);
+
 
   chassis.drive_distance(18,
                          chassis.desired_heading,
