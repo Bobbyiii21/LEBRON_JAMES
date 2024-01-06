@@ -35,7 +35,6 @@ void skills()
   Intake.spinFor(-90, degrees);
   rear_jack.set(false);
   wait(1, timeUnits::sec);
-
   chassis.left_swing_to_angle(65,
                               chassis.swing_max_voltage,
                               chassis.swing_settle_error,
@@ -47,11 +46,11 @@ void skills()
                               chassis.swing_starti);
   vex::task::sleep(1);
   rear_jack.set(true);
-  //LiftToggle("up");
+  LiftToggle("up");
   A_CallBack();
-   //Puncher.spinFor(forward, 55, rotationUnits::rev, 600, velocityUnits::rpm, true); // activate puncher
+  Puncher.spinFor(forward, 50, rotationUnits::rev, 600, velocityUnits::rpm, true); // activate puncher
   wait(1, sec);
-  //LiftToggle("down");
+  LiftToggle("down");
   A_CallBack();
   wait(.5, sec);
   rear_jack.set(false);
@@ -81,8 +80,6 @@ void skills()
                          chassis.turn_settle_error,
                          chassis.turn_settle_time,
                          1500);
-
-
 //Corner Area
   chassis.drive_distance(-15,
                          -155,
@@ -105,26 +102,25 @@ void skills()
                          chassis.turn_settle_error,
                          chassis.turn_settle_time,
                          900);
-chassis.drive_distance(-8,
+  A_CallBack();
+  chassis.drive_distance(-8,
                          -155,
                          MAXVOLTAGE,
                          chassis.heading_max_voltage,
                          chassis.turn_settle_error,
                          chassis.turn_settle_time,
                          900);
-spinChassisReverseMAX(800);
-
-
-
-  chassis.drive_distance(18,
+  spinChassisReverseMAX(800);
+  chassis.drive_distance(15,
                          chassis.desired_heading,
                          MAXVOLTAGE,
                          chassis.heading_max_voltage,
                          chassis.turn_settle_error,
                          chassis.turn_settle_time,
                          800);
+  A_CallBack();
   chassis.turn_to_angle(135,
-                        chassis.turn_max_voltage,
+                        7,
                         chassis.turn_settle_error,
                         chassis.turn_settle_time,
                         800);
@@ -144,7 +140,7 @@ spinChassisReverseMAX(800);
                          chassis.turn_settle_time,
                          800);
   chassis.right_swing_to_angle(-90,
-                               MAXVOLTAGE,
+                               6,
                                chassis.swing_settle_error,
                                chassis.swing_settle_time,
                                800,
@@ -160,7 +156,7 @@ spinChassisReverseMAX(800);
                          chassis.turn_settle_time,
                          800);
   chassis.right_swing_to_angle(140,
-                               MAXVOLTAGE,
+                               6,
                                chassis.swing_settle_error,
                                chassis.swing_settle_time,
                                800,
@@ -168,66 +164,133 @@ spinChassisReverseMAX(800);
                                chassis.swing_ki,
                                chassis.swing_kd,
                                chassis.swing_starti);
-chassis.drive_distance(-18,
-                         chassis.desired_heading,
-                         MAXVOLTAGE,
-                         chassis.heading_max_voltage,
-                         chassis.turn_settle_error,
-                         chassis.turn_settle_time,
-                         800);
-chassis.right_swing_to_angle(-90,
-                               MAXVOLTAGE,
-                               chassis.swing_settle_error,
-                               chassis.swing_settle_time,
-                               800,
-                               chassis.swing_kp,
-                               chassis.swing_ki,
-                               chassis.swing_kd,
-                               chassis.swing_starti);
-X_CallBack();
-chassis.drive_distance(-20,
-                         chassis.desired_heading,
-                         MAXVOLTAGE,
-                         chassis.heading_max_voltage,
-                         chassis.turn_settle_error,
-                         chassis.turn_settle_time,
-                         800);
-chassis.drive_distance(22,
-                         chassis.desired_heading,
-                         MAXVOLTAGE,
-                         chassis.heading_max_voltage,
-                         chassis.turn_settle_error,
-                         chassis.turn_settle_time,
-                         800);
-chassis.drive_distance(-30,
-                         chassis.desired_heading,
-                         MAXVOLTAGE,
-                         chassis.heading_max_voltage,
-                         chassis.turn_settle_error,
-                         chassis.turn_settle_time,
-                         800);
-chassis.drive_distance(30,
-                         chassis.desired_heading,
-                         MAXVOLTAGE,
-                         chassis.heading_max_voltage,
-                         chassis.turn_settle_error,
-                         chassis.turn_settle_time,
-                         800);
-chassis.drive_distance(-30,
+  chassis.drive_distance(-18,
+                           chassis.desired_heading,
+                           MAXVOLTAGE,
+                           chassis.heading_max_voltage,
+                           chassis.turn_settle_error,
+                           chassis.turn_settle_time,
+                           800);
+  chassis.right_swing_to_angle(-90,
+                                 6,
+                                 chassis.swing_settle_error,
+                                 chassis.swing_settle_time,
+                                 800,
+                                 chassis.swing_kp,
+                                 chassis.swing_ki,
+                                 chassis.swing_kd,
+                                 chassis.swing_starti);
+  X_CallBack();
+  chassis.drive_distance(-20,
+                           chassis.desired_heading,
+                           MAXVOLTAGE,
+                           chassis.heading_max_voltage,
+                           chassis.turn_settle_error,
+                           chassis.turn_settle_time,
+                           800);
+  chassis.drive_distance(5,
+                           chassis.desired_heading,
+                           MAXVOLTAGE,
+                           chassis.heading_max_voltage,
+                           chassis.turn_settle_error,
+                           chassis.turn_settle_time,
+                           800);
+  Y_CallBack();
+
+
+  /*
+  chassis.drive_distance(22,
+                           chassis.desired_heading,
+                           MAXVOLTAGE,
+                           chassis.heading_max_voltage,
+                           chassis.turn_settle_error,
+                           chassis.turn_settle_time,
+                           800);
+  chassis.drive_distance(-30,
+                           chassis.desired_heading,
+                           MAXVOLTAGE,
+                           chassis.heading_max_voltage,
+                           chassis.turn_settle_error,
+                           chassis.turn_settle_time,
+                           800);
+  chassis.drive_distance(30,
+                           chassis.desired_heading,
+                           MAXVOLTAGE,
+                           chassis.heading_max_voltage,
+                           chassis.turn_settle_error,
+                           chassis.turn_settle_time,
+                           800);
+  chassis.drive_distance(-30,
                          chassis.desired_heading,
                          MAXVOLTAGE,
                          chassis.heading_max_voltage,
                          chassis.turn_settle_error,
                          chassis.turn_settle_time,
                          850);
- chassis.drive_distance(15,
+  chassis.drive_distance(15,
                          180,
                          MAXVOLTAGE,
                          5,
                          chassis.turn_settle_error,
                          chassis.turn_settle_time,
+                         800); */
+  chassis.right_swing_to_angle(180,
+                               MAXVOLTAGE,
+                               chassis.swing_settle_error,
+                               chassis.swing_settle_time,
+                               800,
+                               chassis.swing_kp,
+                               chassis.swing_ki,
+                               chassis.swing_kd,
+                               chassis.swing_starti);
+  chassis.drive_distance(-19,
+                         chassis.desired_heading,
+                         MAXVOLTAGE,
+                         chassis.heading_max_voltage,
+                         chassis.turn_settle_error,
+                         chassis.turn_settle_time,
+                         850);
+  chassis.turn_to_angle(-90,
+                        7,
+                        chassis.turn_settle_error,
+                        chassis.turn_settle_time,
+                        800);
+  chassis.drive_distance(-10,
+                         chassis.desired_heading,
+                         MAXVOLTAGE,
+                         chassis.heading_max_voltage,
+                         chassis.turn_settle_error,
+                         chassis.turn_settle_time,
                          800);
+  chassis.right_swing_to_angle(0,
+                               MAXVOLTAGE,
+                               chassis.swing_settle_error,
+                               chassis.swing_settle_time,
+                               800,
+                               chassis.swing_kp,
+                               chassis.swing_ki,
+                               chassis.swing_kd,
+                               chassis.swing_starti);
+  chassis.drive_distance(8,
+                         chassis.desired_heading,
+                         MAXVOLTAGE,
+                         chassis.heading_max_voltage,
+                         chassis.turn_settle_error,
+                         chassis.turn_settle_time,
+                         850);
+  spinChassisReverseMAX(800);
+  chassis.drive_distance(8,
+                         chassis.desired_heading,
+                         MAXVOLTAGE,
+                         chassis.heading_max_voltage,
+                         chassis.turn_settle_error,
+                         chassis.turn_settle_time,
+                         850);
 
+
+
+
+  
 
   // intake_air.set(true); //intake is up
   // chassis.left_swing_to_angle(-120);
@@ -345,7 +408,7 @@ void newCloseSide()
                         chassis.turn_kd,
                         chassis.turn_starti);
   task::sleep(500);
-  Y_CallBack();
+  
   chassis.drive_distance(-9,
                          135,
                          chassis.drive_max_voltage,
@@ -364,7 +427,7 @@ void newCloseSide()
                                chassis.swing_kd,
                                chassis.swing_starti);
   task::sleep(1);
-  chassis.drive_distance(-11,
+  chassis.drive_distance(-9,
                          180,
                          12,
                          chassis.heading_max_voltage,
@@ -372,8 +435,7 @@ void newCloseSide()
                          chassis.drive_settle_time,
                          timeout);
   task::sleep(1);
-  Y_CallBack();
-  chassis.drive_distance(11,
+  chassis.drive_distance(9,
                          180,
                          chassis.drive_max_voltage,
                          chassis.heading_max_voltage,

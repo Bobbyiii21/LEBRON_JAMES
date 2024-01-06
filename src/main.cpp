@@ -93,7 +93,7 @@ PORT3,     -PORT4,
 
 );
 
-int current_auton_selection = 4;
+int current_auton_selection = 1;
 bool auto_started = false;
 
 void pre_auton(void) {
